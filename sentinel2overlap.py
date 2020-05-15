@@ -3,10 +3,10 @@
 
 import argparse
 import time as t
+import src.helper as h
 
-import helper as h
-import overlap
-from helper import pprint
+from src.helper import pprint
+from src.overlap import overlap
 
 parser = argparse.ArgumentParser(description="Script to find Sentinel2 overlap tiles for the given region)")
 parser.add_argument('-i', '--input', help="Path to target .geojson file with the given region")
@@ -34,7 +34,7 @@ def main():
 
     print(target)
 
-    overlap_tiles = overlap.overlap(target, tiles, args.verbose)
+    overlap_tiles = overlap(target, tiles, args.verbose)
 
     h.save_to_file(args.output, overlap_tiles)
 
