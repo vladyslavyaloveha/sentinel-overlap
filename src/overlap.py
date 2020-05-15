@@ -1,20 +1,15 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import geopandas as gp
+
 from geopandas import GeoDataFrame
+from src.helper import pprint
 
 
-def _tree_intersect(target: GeoDataFrame, tiles: GeoDataFrame):
+def _get_intersect_tiles(target: GeoDataFrame, tiles: GeoDataFrame, limit=0.001):
     # Get the indices of the tiles that are likely to be inside the bounding box of the given Polygon
     tiles_indexes = list(tiles.sindex.intersection(target.geometry[0].bounds))
     tiles = tiles.loc[tiles_indexes]
     # Make the precise tiles in Polygon query
     tiles = tiles.loc[tiles.intersects(target.geometry[0])]
-    return tiles
-
-
-def _get_intersect_area(target: GeoDataFrame, tiles: GeoDataFrame, limit=0.001):
     # change geometry and calculate intersection area
     target['geometry'] = target.geometry.to_crs({'init': 'epsg:6933'})
     tiles['geometry'] = tiles.geometry.to_crs({'init': 'epsg:6933'})
@@ -24,9 +19,9 @@ def _get_intersect_area(target: GeoDataFrame, tiles: GeoDataFrame, limit=0.001):
     return tiles
 
 
-def overlap(target: GeoDataFrame, tiles: GeoDataFrame):
-    tiles = _tree_intersect(target, tiles)
-    tiles = _get_intersect_area(target, tiles)
+def overlap(target: GeoDataFrame, tiles: GeoDataFrame, verbose):
+    pprint(f"Start finding overlapping tiles", verbose)
+    tiles = _get_intersect_tiles(target, tiles)
 
     result_tiles = list()
     for row in tiles.itertuples():
@@ -37,6 +32,8 @@ def overlap(target: GeoDataFrame, tiles: GeoDataFrame):
 
     result = gp.GeoDataFrame(result_tiles, crs={'init': 'epsg:6933'})
     result = result.to_crs({'init': 'epsg:4326'})
+    pprint(f"End finding overlapping tiles", verbose)
+
     return result
 
 
