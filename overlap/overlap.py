@@ -27,8 +27,8 @@ def _get_intersect_tiles(target: GeoDataFrame, tiles: GeoDataFrame, limit=0.001)
     # Make the precise tiles in Polygon query
     tiles = tiles.loc[tiles.intersects(target.geometry[0])]
     # change geometry and calculate intersection area
-    target['geometry'] = target.geometry.to_crs({'init': 'epsg:6933'})
-    tiles['geometry'] = tiles.geometry.to_crs({'init': 'epsg:6933'})
+    target['geometry'] = target.geometry.to_crs({'init': 'epsg:3395'})
+    tiles['geometry'] = tiles.geometry.to_crs({'init': 'epsg:3395'})
     tiles['area'] = tiles.geometry.apply(lambda g: g.intersection(target.geometry[0]).area / 1e6)
     tiles = tiles.loc[tiles['area'] > limit]
     tiles = tiles.sort_values(by=['area', 'Name'], ascending=[False, True])
@@ -61,7 +61,7 @@ def overlap(target: GeoDataFrame, tiles: GeoDataFrame, verbose: bool):
         if start_area != target.geometry[0].area:
             result_tiles.append(dict(Name=row.Name, geometry=row.geometry))
 
-    result = gp.GeoDataFrame(result_tiles, crs={'init': 'epsg:6933'})
+    result = gp.GeoDataFrame(result_tiles, crs={'init': 'epsg:3395'})
     result = result.to_crs({'init': 'epsg:4326'})
     pprint(f"End finding overlapping tiles", verbose)
 
