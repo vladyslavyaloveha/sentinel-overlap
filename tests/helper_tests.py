@@ -29,7 +29,7 @@ class LoadFromDriveTestCase(unittest.TestCase):
 
     def test_get_response_from_drive(self):
         # Configure the mock to return a response with an OK status code.
-        self.mock_get.return_value = mock.MagicMock(self.status_code)
+        self.mock_get.return_value = mock.MagicMock(status_code=self.status_code)
         response = _get_response_from_drive(self.file_id)
         self.assertEqual(response.status_code, self.status_code)
 
