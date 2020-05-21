@@ -35,7 +35,7 @@ def _get_intersect_tiles(target: GeoDataFrame, tiles: GeoDataFrame, limit=0.001)
     return tiles
 
 
-def overlap(target: GeoDataFrame, tiles: GeoDataFrame, verbose):
+def overlap(target: GeoDataFrame, tiles: GeoDataFrame, verbose: bool):
     """
     Find all unique tiles that intersects given region, based on max coverage area
         Parameters
