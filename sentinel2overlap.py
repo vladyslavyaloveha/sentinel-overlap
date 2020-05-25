@@ -22,7 +22,7 @@ def main():
     target = ovp.load_from_file(args.input)
 
     overlap_tiles = ovp.overlap(target, tiles, args.verbose)
-    print(f"Found tiles:\n{', '.join(list(overlap_tiles.Name))}")
+    print(f"Found tiles:\n{', '.join(sorted(list(overlap_tiles.Name)))}")
 
     pprint(f"Saving overlap tiles to {args.output} file", args.verbose)
     ovp.save_to_file(args.output, overlap_tiles)

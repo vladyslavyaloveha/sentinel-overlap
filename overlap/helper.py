@@ -49,7 +49,7 @@ def load_from_drive(file_id: str, verbose: bool):
     response = _get_response_from_drive(file_id)
     loaded_data = json.loads(response.text)
     tiles = GeoDataFrame.from_features(loaded_data["features"], crs={'init': 'epsg:4326'})
-    pprint(f"GeoData for loaded", verbose)
+    pprint(f"GeoData for {file_id} loaded", verbose)
     return tiles
 
 
