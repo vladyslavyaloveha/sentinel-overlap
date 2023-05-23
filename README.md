@@ -6,7 +6,7 @@ Python script to search for Sentinel2 satellite tiles that cover user defined ar
 | modules | 
 | ------ | 
 | requests==2.23.0 | 
-| geopandas==0.6.1 | 
+| geopandas==0.12.2 | 
 
 ### Run
 ```
